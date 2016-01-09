@@ -14,6 +14,7 @@
     <script src="js/app.js"></script>
     <script src="js/annyang-service.js"></script>
     <script src="js/weather-service.js"></script>
+    <script src="js/transportation-service.js"></script>
     <script src="js/map-service.js"></script>
     <script src="js/hue-service.js"></script>
     <script src="js/geolocation-service.js"></script>
@@ -27,7 +28,7 @@
     <div class="top">
       <div class="top-left">
         <div class="date grey">{{date | date : 'EEEE, MMMM d yyyy'}}</div>
-        <div class="time">{{date | date : 'hh:mm a'}}</div>
+        <div class="time">{{date | date : 'HH:MM'}}</div>
       </div>
       <div class="top-right">
         <div class="weather">
@@ -38,8 +39,8 @@
           <div class="weather-week" ng-repeat="forcast in weeklyForcast.data" ng-if="$index > 0">
             <div class="weather-week-day">
               <span class="day light-grey">{{forcast.day}}</span>
-              <span class="tempreture tempreture-min">{{forcast.temperatureMin}}</span>
-              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}</span>
+              <span class="tempreture tempreture-min">{{forcast.temperatureMin}}&deg;</span>
+              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}&deg;</span>
             </div>
           </div>
         </div>
@@ -55,6 +56,15 @@
         </div>
       </div>
       <div class="bottom-center">
+        <div class="transportation" ng-repeat="trip in destination0" ng-if="$index > 0">
+            <div class="transportation-trip">
+              <span class="time light-grey">{{trip.from.departure}}</span>
+              <span class="station light-grey">{{trip.from.station.name}}</span>
+              <span class="time light-grey">{{trip.to.arrival}}</span>
+              <span class="station light-grey">{{trip.to.station.name}}</span>
+            </div>
+        </div>
+
         <!-- Command list -->
         <div class="commands animate-grow" ng-show="focus == 'commands'">
           <h2>Availalble Commands</h2>
