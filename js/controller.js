@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout) {
+    function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, TransportationService, MapService, HueService, $scope, $timeout) {
         var _this = this;
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
         $scope.listening = false;
@@ -10,6 +10,7 @@
         $scope.focus = "default";
         $scope.user = {};
         $scope.interimResult = DEFAULT_COMMAND_TEXT;
+        $scope.geoposition = "";
 
         $scope.colors=["#6ed3cf", "#9068be", "#e1e8f0", "#e62739"];
 
@@ -33,7 +34,8 @@
             //Get our location and then get the weather for our location
             GeolocationService.getLocation().then(function(geoposition){
                 console.log("Geoposition", geoposition);
-                WeatherService.init(geoposition).then(function(){
+                $scope.geoposition = geoposition;
+                WeatherService.init($scope.geoposition).then(function(){
                     $scope.currentForcast = WeatherService.currentForcast();
                     $scope.weeklyForcast = WeatherService.weeklyForcast();
                     console.log("Current", $scope.currentForcast);
@@ -41,6 +43,10 @@
                     //refresh the weather every hour
                     //this doesn't acutually updat the UI yet
                     //$timeout(WeatherService.refreshWeather, 3600000);
+                });
+                TransportationService.init($scope.geoposition).then(function(){
+                  $scope.destination0 = TransportationService.destination0();
+                  console.log("Destination0", $scope.destination0);
                 });
             })
 
