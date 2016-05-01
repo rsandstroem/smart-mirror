@@ -23,16 +23,10 @@
             console.debug('added command "' + phrase + '"', service.commands);
         };
 
-        service.setLanguage = function(langCode) {
-            annyang.setLanguage(langCode);
-        };
-
-        service.setLanguage(config.language);
-
-        service.start = function(listening, interimResult, result, error) {
+        service.start = function(listening, interimResult, result) {
             annyang.addCommands(service.commands);
             annyang.debug(true);
-            // add specified callback functions
+            annyang.start();
             if (typeof(listening) == "function") {
                 annyang.addCallback('start', function(){$rootScope.$apply(listening(true));});
                 annyang.addCallback('end', function(data){console.log("End", data)});
@@ -43,15 +37,7 @@
             if (typeof(result) == "function") {
                 annyang.addCallback('result', function(data){$rootScope.$apply(result(data));});
             };
-            if (typeof(error) == "function") {
-                annyang.addCallback('error', function(data){$rootScope.$apply(error(data));});
-            };
-            annyang.start();
         };
-        
-        service.abort = function(){
-            annyang.abort();
-        }
 
         return service;
     }
