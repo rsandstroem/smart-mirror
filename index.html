@@ -58,6 +58,7 @@
       <div class="bottom-center">
         <div class="transportation" ng-repeat="trip in destination0" ng-if="$index > 0">
             <div class="transportation-trip">
+              <span class="time light-grey">{{trip.sections[0].journey.name}}</span>
               <span class="time light-grey">{{trip.from.departure}}</span>
               <span class="station light-grey">{{trip.from.station.name}}</span>
               <span class="time light-grey">{{trip.to.arrival}}</span>
